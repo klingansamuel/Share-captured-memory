@@ -1,29 +1,21 @@
 import React from "react";
 import logo from "../../logo.svg";
+import Particless from "../../components/particles";
+// import Particles from "react-particles";
 
 /**
  * @author
  * @function HomePage
  **/
 
-export default function HomePage(props) {
-  //   <div className="App">
-  //   <header className="App-header">
-  //     <img src={logo} className="App-logo" alt="logo" />
-  //     <p>
-  //       Edit <code>src/App.js</code> and save to reload.
-  //     </p>
-  //     <a
-  //       className="App-link"
-  //       href="https://reactjs.org"
-  //       target="_blank"
-  //       rel="noopener noreferrer"
-  //     >
-  //       Learn React
-  //     </a>
-  //   </header>;
-  //   </div>;
-  <div>testing my app</div>;
-}
+const HomePage = (props) => {
+  return (
+    <div>
+      {/* <Particles /> */}
+      <Particless />
+      <div style={{ color: "blue" }}>test12</div>
+    </div>
+  );
+};
 
-// export default HomePage;
+export default HomePage;
