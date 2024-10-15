@@ -20,7 +20,6 @@ const db = process.env.DB_NAME;
 const port = process.env.PORT;
 
 const URL = `mongodb+srv://${db_username}:${db_password}@cluster0.w9huf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
-// const URL = `mongodb+srv://${db_username}:${db_password}@cluster0.w9huf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 try {
   mongoose.set("strictQuery", false);
   mongoose.connect(URL).then(() => {
