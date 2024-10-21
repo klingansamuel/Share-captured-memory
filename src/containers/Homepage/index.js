@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import logo from "../../logo.svg";
 // import { Box, Typography } from "@mui/material";
 import Card from "@mui/material/Card";
@@ -11,7 +11,7 @@ import Add from "@mui/icons-material/Add";
 
 import Particless from "../../components/particles";
 import zIndex from "@mui/material/styles/zIndex";
-import { JoinFullSharp } from "@mui/icons-material";
+import { JoinFullSharp, Opacity } from "@mui/icons-material";
 // import Particles from "react-particles";
 
 /**
@@ -32,6 +32,31 @@ const ButtonContainer = styled("Box")`
 `;
 
 const HomePage = (props) => {
+  const [name, setName] = useState("");
+  const [message, setMessage] = useState("");
+  const [sharedFiles, setSharedFiles] = useState([]);
+  const inputRef = useRef();
+
+  const uploadFiles = () => {
+    const form = new FormData();
+
+    // for (let i=0; i<sharedFiles.length; i++){
+    //   form.append(`sharedFile${i+1}`, sharedFiles[i]);
+    // }
+    form.append("name", name);
+    form.append("message", message);
+    for (let file of sharedFiles) {
+      form.append("sharedFile", file);
+    }
+    console.log(name);
+    console.log(message);
+    console.log({ files: sharedFiles });
+  };
+
+  const handleSharedFiles = (e) => {
+    setSharedFiles([...sharedFiles, e.target.files]);
+  };
+
   return (
     <Box>
       <Particless style={{ zIndex: -1 }} />
@@ -66,13 +91,22 @@ const HomePage = (props) => {
             </Typography>
 
             <Box
+              onClick={() => inputRef.current.click()}
               style={{
                 padding: 10,
                 marginTop: 30,
-                border: "1px dotted #000",
+                border: "1px dashed #000",
                 borderRadius: 5,
               }}
             >
+              <input
+                type="file"
+                id="file"
+                multiple
+                hidden
+                ref={inputRef}
+                onChange={handleSharedFiles}
+              />
               <AddIcon>
                 <Add
                   style={{
@@ -99,17 +133,57 @@ const HomePage = (props) => {
               </AddIcon>
             </Box>
 
-            <TextField id="standard-basic" label="Name" variant="standard" />
+            <TextField
+              id="standard-basic"
+              label="Name"
+              variant="standard"
+              onChange={(e) => setName(e.target.value)}
+            />
             <TextField
               style={{ marginTop: 20 }}
               id="outlined-textarea"
               label="Message"
               placeholder="Optional"
               multiline
+              onChange={(e) => setMessage(e.target.value)}
             />
           </CardContent>
-          <ButtonContainer>
+          {sharedFiles.length > 0 ? (
+            <ButtonContainer>
+              <Box
+                onClick={uploadFiles}
+                style={{
+                  backgroundColor: "#5070f2",
+                  padding: "15px 0",
+                  margin: "0 30px 20px 30px",
+                  color: "#ffffff",
+                  borderRadius: 18,
+                }}
+              >
+                <Typography style={{ fontWeight: "bold" }}>Upload</Typography>
+              </Box>
+            </ButtonContainer>
+          ) : (
+            <ButtonContainer>
+              <Box
+                style={{
+                  backgroundColor: "#5070f2",
+                  opacity: 0.5,
+                  padding: "15px 0",
+                  margin: "0 30px 20px 30px",
+                  color: "#ffffff",
+                  borderRadius: 18,
+                }}
+              >
+                <Typography style={{ fontWeight: "bold", opacity: 0.8 }}>
+                  Upload
+                </Typography>
+              </Box>
+            </ButtonContainer>
+          )}
+          {/* <ButtonContainer>
             <Box
+              onClick={uploadFiles}
               style={{
                 backgroundColor: "#5070f2",
                 padding: "15px 0",
@@ -120,7 +194,7 @@ const HomePage = (props) => {
             >
               <Typography style={{ fontWeight: "bold" }}>Upload</Typography>
             </Box>
-          </ButtonContainer>
+          </ButtonContainer> */}
         </CardActionArea>
       </Card>
     </Box>
