@@ -12,6 +12,8 @@ import Add from "@mui/icons-material/Add";
 import Particless from "../../components/particles";
 import zIndex from "@mui/material/styles/zIndex";
 import { JoinFullSharp, Opacity } from "@mui/icons-material";
+import axios from "axios";
+import { api } from "../../urlConfig";
 // import Particles from "react-particles";
 
 /**
@@ -36,8 +38,9 @@ const HomePage = (props) => {
   const [message, setMessage] = useState("");
   const [sharedFiles, setSharedFiles] = useState([]);
   const inputRef = useRef();
+  const url = api;
 
-  const uploadFiles = () => {
+  const uploadFiles = async () => {
     const form = new FormData();
 
     // for (let i=0; i<sharedFiles.length; i++){
@@ -48,9 +51,20 @@ const HomePage = (props) => {
     for (let file of sharedFiles) {
       form.append("sharedFile", file);
     }
-    console.log(name);
-    console.log(message);
-    console.log({ files: sharedFiles });
+    try {
+      const res = await axios.post(`${url}/memory/share`, form);
+      if (res.status === 200) {
+        console.log("upload success");
+        console.log(res);
+      } else {
+        console.log("there was an error sharing memory with couple");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+    // console.log(name);
+    // console.log(message);
+    // console.log({ files: sharedFiles });
   };
 
   const handleSharedFiles = (e) => {

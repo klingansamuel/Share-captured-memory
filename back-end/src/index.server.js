@@ -5,6 +5,9 @@ const path = require("path");
 const cors = require("cors");
 const app = express();
 
+//routes
+const sharedMemoryRoutes = require("./routes/shared_memory");
+
 //calling environment variables
 env.config();
 
@@ -12,6 +15,7 @@ app.use(cors());
 
 app.use(express.json());
 app.use("/public", express.static(path.join(__dirname, "uploads")));
+app.use("/api", sharedMemoryRoutes);
 
 //db info
 const db_username = process.env.DB_USERNAME;
