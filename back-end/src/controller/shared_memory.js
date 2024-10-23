@@ -16,7 +16,7 @@ exports.createSharedMemory = async (req, res) => {
     sharedFiles,
   });
   console.log({ name, message, sharedFiles });
-  //   await sharedMemory.save();
+  await sharedMemory.save();
   res.status(200).json({ sharedMemory });
 
   //sharedMemory.save((error, sharedMemory) => {
